@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: yourdockerhub/demo-app
-  tag: v2
+  repository: lasmor2025/demo-app
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:

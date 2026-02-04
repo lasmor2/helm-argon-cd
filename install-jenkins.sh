@@ -11,7 +11,7 @@ kubectl wait --for=condition=available --timeout=300s deployment/jenkins -n jenk
 # Get Jenkins admin password
 echo "Jenkins admin password:"
 kubectl exec -n jenkins deployment/jenkins -- cat /var/jenkins_home/secrets/initialAdminPassword
+echo ""
 
-# Port forward to access Jenkins UI
-echo "Access Jenkins at http://localhost:8080"
-kubectl port-forward svc/jenkins -n jenkins 8080:8080
+echo "Jenkins installed successfully!"
+echo "Use ./port-forward.sh to access Jenkins UI"

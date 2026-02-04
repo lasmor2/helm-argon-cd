@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/lasmor2025/helm-argon-cd
+    repoURL: https://github.com/lasmor2/helm-argon-cd
     targetRevision: HEAD
     path: app-demo
     helm:
       valueFiles:
-      - value.yml
+        - value.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -20,4 +20,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true

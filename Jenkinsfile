@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_HUB_REPO = 'yourdockerhub/demo-app'
+        DOCKER_HUB_REPO = 'lasmor2025/demo-app'
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')
         GITHUB_CREDENTIALS = credentials('github-credentials')
     }
@@ -12,7 +12,7 @@ pipeline {
             steps {
                 git branch: 'main', 
                     credentialsId: 'github-credentials',
-                    url: 'https://github.com/your-repo/helm-argon-cd.git'
+                    url: 'https://github.com/lasmor2/helm-argon-cd.git'
             }
         }
         
