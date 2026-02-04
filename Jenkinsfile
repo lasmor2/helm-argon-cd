@@ -1,10 +1,15 @@
 pipeline {
     agent any
     
+    triggers {
+        githubPush()
+    }
+    
     environment {
         DOCKER_HUB_REPO = 'lasmor2025/demo-app'
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')
         GITHUB_CREDENTIALS = credentials('github-credentials')
+        GIT_BRANCH = 'main'
     }
     
     stages {
