@@ -11,6 +11,10 @@ app.get("/status", (req, res) => {
   res.json({ status: "OK", timestamp: new Date() });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).send("Healthy");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
