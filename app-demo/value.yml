@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: yourdockerhub/demo-app
+  tag: v2
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  host: demo.local
+  className: nginx

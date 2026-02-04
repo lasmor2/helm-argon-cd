@@ -1,0 +1,43 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by JCasC"
+  numExecutors: 2
+  mode: NORMAL
+  
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          scope: GLOBAL
+          id: "dockerhub-credentials"
+          username: "${DOCKERHUB_USERNAME}"
+          password: "${DOCKERHUB_PASSWORD}"
+          description: "Docker Hub credentials"
+      - usernamePassword:
+          scope: GLOBAL
+          id: "github-credentials"
+          username: "${GITHUB_USERNAME}"
+          password: "${GITHUB_TOKEN}"
+          description: "GitHub credentials"
+
+jobs:
+  - script: >
+      pipelineJob('demo-app-pipeline') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/your-repo/helm-argon-cd.git')
+                  credentials('github-credentials')
+                }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+        triggers {
+          githubPush()
+        }
+      }
