@@ -44,7 +44,7 @@ pipeline {
                     // Windows sed alternative using PowerShell
                     bat "powershell -Command \"(Get-Content app-demo/value.yml) -replace 'tag: .*', 'tag: v${buildNumber}' | Set-Content app-demo/value.yml\""
                     bat "git add app-demo/value.yml"
-                    bat "git commit -m 'Update image tag to v${buildNumber}'"
+                    bat "git commit -m \"Update image tag to v${buildNumber}\""
                     bat "git push origin main"
                 }
             }
