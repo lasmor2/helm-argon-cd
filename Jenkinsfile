@@ -3,15 +3,12 @@ pipeline {
     
     environment {
         DOCKER_HUB_REPO = 'lasmor2025/demo-app'
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')
-        GITHUB_CREDENTIALS = credentials('github-credentials')
     }
     
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', 
-                    credentialsId: 'github-credentials',
                     url: 'https://github.com/lasmor2/helm-argon-cd.git'
             }
         }
@@ -20,8 +17,8 @@ pipeline {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
-                    sh "docker build -t ${DOCKER_HUB_REPO}:v${buildNumber} ."
-                    sh "docker tag ${DOCKER_HUB_REPO}:v${buildNumber} ${DOCKER_HUB_REPO}:latest"
+                    bat "docker build -t ${DOCKER_HUB_REPO}:v${buildNumber} ."
+                    bat "docker tag ${DOCKER_HUB_REPO}:v${buildNumber} ${DOCKER_HUB_REPO}:latest"
                 }
             }
         }
@@ -30,9 +27,8 @@ pipeline {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
-                    sh "echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
-                    sh "docker push ${DOCKER_HUB_REPO}:v${buildNumber}"
-                    sh "docker push ${DOCKER_HUB_REPO}:latest"
+                    bat "docker push ${DOCKER_HUB_REPO}:v${buildNumber}"
+                    bat "docker push ${DOCKER_HUB_REPO}:latest"
                 }
             }
         }
@@ -41,10 +37,10 @@ pipeline {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
-                    sh "sed -i 's/tag: .*/tag: v${buildNumber}/' app-demo/value.yml"
-                    sh "git add app-demo/value.yml"
-                    sh "git commit -m 'Update image tag to v${buildNumber}'"
-                    sh "git push origin main"
+                    bat "powershell -Command \"(Get-Content app-demo/value.yml) -replace 'tag: .*', 'tag: v${buildNumber}' | Set-Content app-demo/value.yml\""
+                    bat "git add app-demo/value.yml"
+                    bat "git commit -m \"Update image tag to v${buildNumber}\""
+                    bat "git push origin main"
                 }
             }
         }
@@ -52,7 +48,7 @@ pipeline {
     
     post {
         always {
-            sh 'docker logout'
+            bat 'docker logout'
         }
     }
 }
