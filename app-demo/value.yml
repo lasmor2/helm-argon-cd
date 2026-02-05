@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: lasmor2025/demo-app
-  tag: v3
+  tag: v4
   pullPolicy: IfNotPresent
 
 service:
